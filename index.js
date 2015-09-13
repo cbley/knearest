@@ -1,4 +1,5 @@
 var distance = require('turf-distance');
+var featureCollection = require('turf-featurecollection');
 
 module.exports = function (targetPoint, candidatePoints, k) {
   var results = [];
@@ -19,7 +20,7 @@ module.exports = function (targetPoint, candidatePoints, k) {
     }
   });
 
-  return results;
+  return featureCollection(results);
 };
 
 function pointDistanceCompare(p1, p2) {

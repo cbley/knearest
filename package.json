@@ -9,10 +9,12 @@
   "author": "Christopher Bley <chrisbley@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "turf-distance": "^1.0.0"
+    "turf-distance": "^1.0.0",
+    "turf-featurecollection": "^1.0.1"
   },
   "devDependencies": {
     "benchmark": "^1.0.0",
+    "geojsonhint": "^1.1.0",
     "tape": "^4.2.0"
   }
 }
