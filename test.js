@@ -5,7 +5,7 @@ var knearest = require('./');
 
 test('n nearest', function(t) {
   var pt = JSON.parse(fs.readFileSync(__dirname + '/geojson/target.geojson'));
-  var pts = JSON.parse(fs.readFileSync(__dirname + '/geojson/10000.geojson'));
+  var pts = JSON.parse(fs.readFileSync(__dirname + '/geojson/100.geojson'));
   var k = 15;
 
   var closestPoints = knearest(pt, pts, k);
