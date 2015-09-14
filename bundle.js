@@ -28,6 +28,7 @@ request(pointsUrl, function(error, response, body) {
       });
     }
   }).addTo(map);
+  highLightNearPoints(center);
 });
 
 L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
