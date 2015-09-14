@@ -5,11 +5,14 @@ var knearest = require('knearest');
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images';
 
+var center = L.latLng(39.952385, -75.097389);
 var map = L.map('map');
-map.setView([39.952385, -75.097389], 11);
+map.setView(center, 11);
 map.on('click', highlightNearest);
 
 var clickPointMarker, nearestLayer, points;
+clickPointMarker = L.marker(center).addTo(map);
+clickPointMarker.bindPopup("Click anywhere on the map to highlight the 10 nearest points.").openPopup();
 
 var pointsUrl = 'https://gist.githubusercontent.com/cbley/803099ab3ecf8cb84c97/raw/44bdde9c5b8d94652adb6e7a766f6ef4fe3c2405/gistfile1.json';
 request(pointsUrl, function(error, response, body) {
@@ -22,7 +25,7 @@ request(pointsUrl, function(error, response, body) {
         weight: 0,
         opacity: 1,
         fillOpacity: 0.5
-      })
+      });
     }
   }).addTo(map);
 });
@@ -43,7 +46,7 @@ function latlngToPoint(latlng) {
         latlng.lat
       ]
     }
-  }
+  };
 }
 
 function addClickPoint(latlng) {
@@ -68,7 +71,7 @@ function highLightNearPoints(latlng) {
           weight: 0,
           opacity: 1,
           fillOpacity: 1
-        })
+        });
       }
     }).addTo(map);
   } else {
@@ -80,10 +83,6 @@ function highLightNearPoints(latlng) {
 function highlightNearest(e) {
   addClickPoint(e.latlng);
   highLightNearPoints(e.latlng);
-}
-
-function boundsToWSEN(bounds) {
-  return [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()]
 }
 },{"knearest":203,"leaflet":207,"request":208}],2:[function(require,module,exports){
 
