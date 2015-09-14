@@ -1,0 +1,29 @@
+{
+  "name": "knearest-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "knearest": "git+https://github.com/cbley/knearest.git",
+    "leaflet": "^0.7.5",
+    "request": "^2.61.0"
+  },
+  "devDependencies": {
+    "beefy": "^2.1.5",
+    "browserify": "^11.1.0"
+  },
+  "scripts": {
+    "start": "beefy app.js:bundle.js --live",
+    "bundle": "browserify app.js -o bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbley/knearest.git"
+  },
+  "author": "cbley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cbley/knearest/issues"
+  },
+  "homepage": "https://github.com/cbley/knearest#readme"
+}
