@@ -6,3 +6,9 @@ html, body, #map {
     height: 100%;
     width: 100%;
 }
+
+#spin {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+}

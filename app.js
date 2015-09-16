@@ -1,39 +1,47 @@
 var L = require('leaflet');
+var _ = require('leaflet-ajax');
 var request = require('request');
 var knearest = require('knearest');
+var Spinner = require('spin');
+
+var spinner = new Spinner().spin(document.getElementById('spin'));
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images';
 
-var center = L.latLng(39.952385, -75.097389);
+var clickPointMarker, nearestLayer, points;
+var center = L.latLng(38.9508, -76.8775);
 var map = L.map('map');
 map.setView(center, 11);
-map.on('click', highlightNearest);
-
-var clickPointMarker, nearestLayer, points;
-clickPointMarker = L.marker(center).addTo(map);
-clickPointMarker.bindPopup("Click anywhere on the map to highlight the 10 nearest points.").openPopup();
-
-var pointsUrl = 'https://gist.githubusercontent.com/cbley/803099ab3ecf8cb84c97/raw/44bdde9c5b8d94652adb6e7a766f6ef4fe3c2405/gistfile1.json';
-request(pointsUrl, function(error, response, body) {
-  points = JSON.parse(body);
-  var pointsLayers = L.geoJson(points, {
-    pointToLayer: function(feature, latlng) {
-      return L.circleMarker(latlng, {
-        radius: 5,
-        fillColor: "#e31a1c",
-        weight: 0,
-        opacity: 1,
-        fillOpacity: 0.5
-      });
-    }
-  }).addTo(map);
-  highLightNearPoints(center);
-});
 
 L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
   maxZoom: 18,
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
+var pointsUrl = 'https://s3.amazonaws.com/cbley.com/dc-baltimore_maryland_places.geojson.gz';
+var pointsLayer = L.geoJson.ajax(pointsUrl, {
+  middleware: function(data) {
+    return points = data;
+  },
+  pointToLayer: function(feature, latlng) {
+    return L.circleMarker(latlng, {
+      radius: 5,
+      fillColor: "#e31a1c",
+      weight: 0,
+      opacity: 1,
+      fillOpacity: 0.5
+    });
+  }
+}).addTo(map);
+
+pointsLayer.on('data:loaded', function(e) {
+  map.on('mousemove', highlightNearest);
+
+  clickPointMarker = L.marker(center).addTo(map);
+
+  highLightNearPoints(center);
+  spinner.stop();
+});
 
 function latlngToPoint(latlng) {
   return {
@@ -60,7 +68,7 @@ function addClickPoint(latlng) {
 
 function highLightNearPoints(latlng) {
   var point = latlngToPoint(latlng);
-  var nearest = knearest(point, points, 10);
+  var nearest = knearest(point, points, 50);
 
   if (!nearestLayer) {
     nearestLayer = L.geoJson(nearest, {

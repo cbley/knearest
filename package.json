@@ -6,7 +6,9 @@
   "dependencies": {
     "knearest": "git+https://github.com/cbley/knearest.git",
     "leaflet": "^0.7.5",
-    "request": "^2.61.0"
+    "leaflet-ajax": "^2.0.0",
+    "request": "^2.61.0",
+    "spin": "0.0.1"
   },
   "devDependencies": {
     "beefy": "^2.1.5",
