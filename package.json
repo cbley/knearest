@@ -7,8 +7,10 @@
     "knearest": "git+https://github.com/cbley/knearest.git",
     "leaflet": "^0.7.5",
     "leaflet-ajax": "^2.0.0",
+    "minifyify": "^7.0.6",
     "request": "^2.61.0",
-    "spin": "0.0.1"
+    "spin": "0.0.1",
+    "uglifyify": "^3.0.1"
   },
   "devDependencies": {
     "beefy": "^2.1.5",
@@ -16,7 +18,7 @@
   },
   "scripts": {
     "start": "beefy app.js:bundle.js --live",
-    "bundle": "browserify app.js -o bundle.js"
+    "bundle": "browserify app.js | uglifyjs -c > bundle.js"
   },
   "repository": {
     "type": "git",
