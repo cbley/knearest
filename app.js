@@ -36,6 +36,7 @@ var pointsLayer = L.geoJson.ajax(pointsUrl, {
 
 pointsLayer.on('data:loaded', function(e) {
   map.on('mousemove', highlightNearest);
+  map.on('click', highlightNearest);
 
   clickPointMarker = L.marker(center).addTo(map);
 
